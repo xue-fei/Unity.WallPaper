@@ -1,0 +1,13 @@
+.vs/
+Library/
+Temp/
+WallPaper.Plugins.csproj
+.vsconfig
+Logs/
+obj/
+Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
+UserSettings/Layouts/default-2021.dwlt
+UnityWallPaper.sln
+ProjectSettings/boot.config
+UserSettings/Search.settings
