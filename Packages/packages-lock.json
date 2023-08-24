@@ -8,7 +8,7 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.16",
+      "version": "2.0.20",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -17,18 +17,18 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.sysroot": {
-      "version": "2.0.6",
+      "version": "2.0.7",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.cn"
     },
     "com.unity.sysroot.linux-x86_64": {
-      "version": "2.0.5",
+      "version": "2.0.6",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.sysroot": "2.0.6"
+        "com.unity.sysroot": "2.0.7"
       },
       "url": "https://packages.unity.cn"
     },
@@ -53,12 +53,12 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.toolchain.win-x86_64-linux-x86_64": {
-      "version": "2.0.5",
+      "version": "2.0.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.sysroot": "2.0.6",
-        "com.unity.sysroot.linux-x86_64": "2.0.5"
+        "com.unity.sysroot": "2.0.7",
+        "com.unity.sysroot.linux-x86_64": "2.0.6"
       },
       "url": "https://packages.unity.cn"
     },
