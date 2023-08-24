@@ -19,7 +19,7 @@ public class WallPaper : MonoBehaviour
     IntPtr wallPaper;
     IntPtr progman;
     IntPtr result;
-    bool isFocus;
+    bool isFocus = false;
     MouseHook mouseHook;
 
     public Button button;
@@ -129,10 +129,15 @@ public class WallPaper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        t.text = Time.time.ToString();
+        //t.text += Time.time.ToString();
         if (!isFocus)
         {
-            //User32.SetFocus(wallPaper);
+            User32.SetFocus(wallPaper);
+        }
+
+        if(Input.GetMouseButtonDown(0))
+        {
+            t.text += Input.mousePosition + "\r\n";
         }
     }
 
@@ -151,6 +156,11 @@ public class WallPaper : MonoBehaviour
         {
 
         }
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        isFocus = focus;
     }
 
     private void OnApplicationQuit()
