@@ -1,8 +1,8 @@
-using System; 
-using System.Runtime.InteropServices; 
+using System;
+using System.Runtime.InteropServices;
 
-public class User32 
-{ 
+public class User32
+{
     [DllImport("kernel32.dll")]
     public extern static IntPtr LoadLibrary(string path);
 
@@ -19,8 +19,15 @@ public class User32
     public static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
 
     [DllImport("user32.dll")]
-    public static extern bool EnumWindows(EnumWindowsProc proc, IntPtr lParam);
-    public delegate bool EnumWindowsProc(IntPtr hwnd, IntPtr lParam);
+    public static extern bool EnumWindows(WNDENUMPROC lpEnumFunc, uint lParam);
+
+    public delegate bool WNDENUMPROC(IntPtr hwnd, uint lParam);
+     
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern IntPtr GetParent(IntPtr hWnd);
+
+    [DllImport("user32.dll")]
+    public static extern uint GetWindowThreadProcessId(IntPtr hWnd, ref uint lpdwProcessId);
 
     [DllImport("user32.dll")]
     public static extern IntPtr SendMessageTimeout(IntPtr hwnd,

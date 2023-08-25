@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using System.Drawing;
 using Button = UnityEngine.UI.Button;
 using Debug = UnityEngine.Debug;
+using System.Diagnostics;
+using AOT;
 
 public class WallPaper : MonoBehaviour
 {
@@ -16,7 +18,7 @@ public class WallPaper : MonoBehaviour
     public int ResWidth;//窗口宽度
     public int ResHeight;//窗口高度
 
-    IntPtr wallPaper;
+    static IntPtr wallPaper;
     IntPtr progman;
     IntPtr result;
     bool isFocus = false;
@@ -47,24 +49,30 @@ public class WallPaper : MonoBehaviour
 
             // 向 Program Manager 窗口发送 0x52c 的一个消息，超时设置为0x3e8（1秒）。
             User32.SendMessageTimeout(progman, 0x52c, IntPtr.Zero, IntPtr.Zero, 0, 0x3e8, result);
-            IntPtr workerw = IntPtr.Zero;
-            User32.EnumWindows((hwnd, lParam) =>
-            {
-                // 找到包含 SHELLDLL_DefView 这个窗口句柄的 WorkerW
-                if (User32.FindWindowEx(hwnd, IntPtr.Zero, "SHELLDLL_DefView", null) != IntPtr.Zero)
-                {
-                    // 找到当前 WorkerW 窗口的，后一个 WorkerW 窗口。 
-                    workerw = User32.FindWindowEx(IntPtr.Zero, hwnd, "WorkerW", null);
 
-                    // 隐藏这个窗口
-                    //ShowWindow(tempHwnd, 0);
-                }
-                return true;
-            }, IntPtr.Zero);
+            User32.EnumWindows(EnumWindowCallBack, 0);
+        }
+    }
+
+    static IntPtr workerw = IntPtr.Zero;
+
+    [MonoPInvokeCallback(typeof(User32.WNDENUMPROC))]
+    public static bool EnumWindowCallBack(IntPtr hwnd, uint lParam)
+    {
+        // 找到包含 SHELLDLL_DefView 这个窗口句柄的 WorkerW
+        if (User32.FindWindowEx(hwnd, IntPtr.Zero, "SHELLDLL_DefView", null) != IntPtr.Zero)
+        {
+            // 找到当前 WorkerW 窗口的，后一个 WorkerW 窗口。 
+            workerw = User32.FindWindowEx(IntPtr.Zero, hwnd, "WorkerW", null);
+
+            // 隐藏这个窗口
+            //ShowWindow(tempHwnd, 0);
 
             User32.SetParent(wallPaper, workerw);
         }
+        return true;
     }
+
 
     private void Start()
     {
@@ -135,7 +143,7 @@ public class WallPaper : MonoBehaviour
             User32.SetFocus(wallPaper);
         }
 
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             t.text += Input.mousePosition + "\r\n";
         }
